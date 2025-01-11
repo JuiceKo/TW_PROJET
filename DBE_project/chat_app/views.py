@@ -57,6 +57,16 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
+@login_required
+def join_chatroom(request, room_id):
+    room = get_object_or_404(Channel, id=room_id)
+    if request.user not in room.members.all():
+        room.members.add(request.user)
+        Message.success(request, f'Vous avez rejoint le salon {room.name} avec succès!')
+    else:
+        Message.info(request, f'Vous êtes déjà membre du salon {room.name}.')
+    return redirect('chatroom_detail', room_id=room.id)
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
