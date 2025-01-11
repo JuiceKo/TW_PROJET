@@ -6,5 +6,6 @@
       <li><a href="{% url 'chatroom_detail' room.id %}">{{ room.name }}</a></li>
     {% endfor %}
   </ul>
+  <a href="{% url 'join_chatroom' room.id %}">Rejoindre le salon</a>
   <a href="{% url 'create_chatroom' %}">Créer un nouveau salon</a>
 {% endblock %}
