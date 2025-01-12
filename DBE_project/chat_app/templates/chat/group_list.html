@@ -1,0 +1,19 @@
+{% extends "squelette.html" %}
+
+{% block title %}
+Liste des Groupes
+{% endblock %}
+
+{% block sectionContenu %}
+<h1>Liste des Groupes</h1>
+
+<ul>
+    {% for group in groups %}
+        <li>
+            <a href="{% url 'chatroom' group.id %}">{{ group.name }}</a> - {{ group.description }}
+        </li>
+    {% empty %}
+        <p>Aucun groupe disponible.</p>
+    {% endfor %}
+</ul>
+{% endblock %}

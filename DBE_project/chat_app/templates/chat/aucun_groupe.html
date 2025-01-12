@@ -1,0 +1,21 @@
+{% extends "squelette.html" %}
+
+{% block title %}
+Aucun Groupe Ouvert - Chatte App
+{% endblock %}
+
+{% block sectionContenu %}
+<div class="aucun-groupe-container">
+    <div class="welcome-box">
+        <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo" />
+        <h1>Bienvenue sur Chatte App</h1>
+        <p class="intro-text">
+            Vous n'avez encore ouvert aucun groupe ou conversation. Sélectionnez un groupe ou ajoutez un nouvel ami pour commencer à discuter !
+        </p>
+        <div class="action-buttons">
+            <a href="{% url 'group_list' %}" class="btn btn-primary">Explorer les Groupes</a>
+            <a href="{% url 'ajouter_ami' %}" class="btn btn-secondary">Ajouter un Ami</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

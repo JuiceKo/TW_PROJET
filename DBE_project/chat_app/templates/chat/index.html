@@ -1,0 +1,26 @@
+{% extends "squelette.html" %}
+{% load static %}
+
+{% block title %}
+Accueil
+{% endblock %}
+
+{% block sectionContenu %}
+<div class="index-container">
+    <div class="welcome-box">
+        <img src="{% static 'images/logo.png' %}" alt="Chatte App Logo" class="logo">
+        <h1>Bienvenue sur Chatte App</h1>
+        <p class="intro-text">
+            Connectez-vous ou inscrivez-vous pour commencer à discuter avec vos amis!
+        </p>
+        <div class="action-buttons">
+            <a href="{% url 'login' %}" class="btn btn-primary">Se connecter</a>
+            <a href="{% url 'register' %}" class="btn btn-secondary">S'inscrire</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footerContenu %}
+<p class="footer-text"> Chatte App - Accueil</p>
+{% endblock %}

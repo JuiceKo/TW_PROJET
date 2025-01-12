@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        {% load static %}
+        <title>{% block title %}{% endblock %}</title>
+        
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    </head>
+    
+    <body>
+        
+        <header class="top-header">
+            <div class="top-bar">
+                <img src="{% static 'images/logo.png' %}" alt="Logo de Chatte App" class="logo">
+                <h1>Chatte App</h1>
+            </div>
+        </header>
+        
+        
+      
+        <section>
+            {% block sectionContenu %}{% endblock %}
+        </section>
+
+        
+        <footer>
+            {% block footerContenu %}{% endblock %}
+        </footer>
+
+        
+        <script src="{% static 'js/scripts.js' %}"></script>
+        <script src="{% static 'js/emoji_picker.js' %}" defer></script>
+
+    </body>
+</html>

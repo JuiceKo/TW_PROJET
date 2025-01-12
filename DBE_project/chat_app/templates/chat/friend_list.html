@@ -1,0 +1,17 @@
+{% extends "squelette.html" %}
+
+{% block title %}
+Liste des Amis
+{% endblock %}
+
+{% block sectionContenu %}
+<h1>Liste des Amis</h1>
+
+<ul>
+    {% for friend in friends %}
+        <li>{{ friend.name }}</li>
+    {% empty %}
+        <p>Aucun ami trouvé.</p>
+    {% endfor %}
+</ul>
+{% endblock %}

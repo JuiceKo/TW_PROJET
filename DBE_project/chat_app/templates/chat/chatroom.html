@@ -1,0 +1,91 @@
+{% extends "squelette.html" %}
+
+{% block title %}
+Salon - {{ group.name }} - Chatte App
+{% endblock %}
+
+{% block sectionContenu %}
+
+
+<div class="conteneur-chat">
+    
+    <div class="barre-laterale">
+
+        <input type="text" id="search-groups" placeholder="Recherche ..." onkeyup="filterGroups()" />
+        <ul id="group-list">
+            {% for grp in groups %}
+                <li>
+                    <a href="{% url 'chatroom' grp.id %}">{{ grp.name }}</a>
+                </li>
+            {% empty %}
+                <p>Aucun groupe disponible.</p>
+            {% endfor %}
+        </ul>
+
+        <h3>Groupes</h3>
+        <ul>
+            {% for grp in groups %}
+                <li class="{% if grp.id == group.id %}actif{% endif %}">
+                    <a href="{% url 'chatroom' grp.id %}">{{ grp.name }}</a>
+                </li>
+            {% empty %}
+                <p>Aucun groupe disponible.</p>
+            {% endfor %}
+        </ul>
+
+        <h3>Amis</h3>
+        <ul>
+            {% for friend in friends %}
+                <li>{{ friend.name }}</li>
+            {% empty %}
+                <p>Aucun ami ajouté pour le moment.</p>
+            {% endfor %}
+        </ul>
+
+        
+        <div class="pagination">
+            {% if friends.has_previous %}
+                <a href="?page={{ friends.previous_page_number }}">Précédent</a>
+            {% endif %}
+            {% if friends.has_next %}
+                <a href="?page={{ friends.next_page_number }}">Suivant</a>
+            {% endif %}
+        </div>
+
+        <div class="boutons-lateraux">
+            <a href="{% url 'creer_groupe' %}" class="button">Créer un groupe</a>
+            <a href="{% url 'ajouter_ami' %}" class="button">Ajouter un ami</a>
+        </div>
+    </div>
+
+    
+    <div class="zone-principale">
+        <div class="entete-chat">{{ group.name }}</div>
+        <div class="messages-chat">
+            {% for message in messages %}
+                <div class="message {% if message.sender == user %}moi{% endif %}">
+                    <strong>{{ message.sender.username }}</strong> :
+                    <span>{{ message.content }}</span>
+                    <small>{{ message.timestamp|date:"d/m/Y H:i" }}</small>
+                </div>
+            {% empty %}
+                <p>Aucun message pour ce groupe pour le moment.</p>
+            {% endfor %}
+        </div>
+
+    
+
+        <div class="saisie-message">
+            <button id="emoji-picker-btn">😊</button>
+            <input type="text" id="message-input" placeholder="Tapez votre message..." />
+            <button type="submit">Envoyer</button>
+        </div>
+
+        
+        {% include 'chat/emoji_picker.html' %}
+        
+    </div>
+</div>
+
+
+{% endblock %}

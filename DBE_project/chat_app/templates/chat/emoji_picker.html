@@ -1,0 +1,25 @@
+<div id="emoji-picker" class="emoji-picker">
+    {% for category, emojis in emojis_by_category.items %}
+        <div class="emoji-category">
+            <h3>{{ category|title }}</h3>
+            <div class="emoji-list">
+                {% for emoji in emojis %}
+                    <button class="emoji-btn" data-emoji="{{ emoji.symbol }}">
+                        {{ emoji.symbol }}
+                    </button>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<script>
+    // Ajoute l'emoji sélectionné au champ d'entrée
+    document.querySelectorAll('.emoji-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const emoji = this.getAttribute('data-emoji');
+            const input = document.querySelector('#message-input');
+            input.value += emoji; // Ajoute l'emoji au champ
+        });
+    });
+</script>
