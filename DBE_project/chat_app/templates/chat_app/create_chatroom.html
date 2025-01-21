@@ -1,9 +1,61 @@
-{% extends 'base.html' %}
+{% extends 'squelette.html' %}
+{% load static %}
+
 {% block content %}
-  <h2>Créer un nouveau salon</h2>
+<style>
+  .form-container {
+    max-width: 500px;
+    margin: 40px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .form-container h2 {
+    margin-top: 0;
+    text-align: center;
+    color: #1d4f91;
+  }
+  label {
+    display: block;
+    margin: 15px 0 5px;
+    font-weight: bold;
+  }
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  button {
+    background-color: #1d4f91;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  button:hover {
+    background-color: #153869;
+  }
+</style>
+
+<div class="form-container">
+  <h2>Créer un Channel</h2>
   <form method="POST">
     {% csrf_token %}
-    <input type="text" name="name" placeholder="Nom du salon">
+
+    <label for="id_name">Nom du channel</label>
+    <input type="text" name="name" id="id_name" required>
+
+    <label for="id_description">Description</label>
+    <textarea name="description" id="id_description" rows="4"></textarea>
+
     <button type="submit">Créer</button>
   </form>
+</div>
 {% endblock %}

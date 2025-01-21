@@ -1,18 +1,126 @@
 {% extends 'squelette.html' %}
-{% block content %}
-  <h2>Salon : {{ room.name }}</h2>
-  <ul>
-    {% for message in messages %}
-      <li>
-        <strong>{{ message.user.username }}</strong> :
-        {{ message.content }} <em>({{ message.timestamp }})</em>
-      </li>
-    {% endfor %}
-  </ul>
 
-  <form method="POST">
-    {% csrf_token %}
-    <textarea name="content" placeholder="Tapez votre message"></textarea>
-    <button type="submit">Envoyer</button>
-  </form>
+{% block content %}
+<style>
+  .chat-container {
+    display: flex;
+    height: 80vh;
+    margin: 20px;
+    background-color: #f5faff;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .chat-section {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+  .chat-section h2 {
+    color: #1d4f91;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+  }
+  .chat-messages ul {
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+  }
+  .chat-messages li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 10px;
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+  }
+  .message-content {
+    font-size: 0.95em;
+  }
+  .timestamp {
+    font-size: 0.85em;
+    color: #666;
+    margin-left: 15px;
+    font-style: italic;
+  }
+  .message-form textarea {
+    width: 100%;
+    height: 60px;
+    padding: 10px;
+    resize: none;
+  }
+  .message-form button {
+    width: 120px;
+    padding: 10px;
+    background-color: #1d4f91;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .message-form button:hover {
+    background-color: #153869;
+  }
+  .channel-info {
+    flex: 0.8;
+    background-color: #fff;
+    border-left: 2px solid #ccc;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  .channel-info h2 {
+    color: #1d4f91;
+    margin-top: 0;
+  }
+  .delete-button {
+    margin-top: 20px;
+    background-color: #d9534f;
+    color: #fff;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .delete-button:hover {
+    background-color: #c9302c;
+  }
+</style>
+
+<div class="chat-container">
+  <div class="chat-section">
+    <h2>Salon : {{ room.name }}</h2>
+    <div class="chat-messages">
+      <ul>
+        {% for message in messages %}
+          <li>
+            <span class="message-content">
+              <strong>{{ message.user.username }}</strong> : {{ message.content }}
+            </span>
+            <span class="timestamp">{{ message.timestamp|date:"d/m/Y H:i" }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <form method="POST" class="message-form">
+      {% csrf_token %}
+      <textarea name="content" placeholder="Tapez votre message..."></textarea>
+      <button type="submit">Envoyer</button>
+    </form>
+  </div>
+  <div class="channel-info">
+    <h2>{{ room.name }}</h2>
+    <p>{{ room.description }}</p>
+
+    <form action="{% url 'delete_channel' room.id %}" method="POST">
+      {% csrf_token %}
+      <button type="submit" class="delete-button">Supprimer le channel</button>
+    </form>
+  </div>
+</div>
 {% endblock %}

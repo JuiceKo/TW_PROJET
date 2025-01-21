@@ -39,16 +39,40 @@ def chatroom_detail(request, room_id):
     if request.method == 'POST':
         content = request.POST.get('content')
         if content:
-            Message.objects.create(chatroom=room, user=request.user, content=content)
+            # Utilise "channel=room" (et non "chatroom")
+            Message.objects.create(
+                channel=room,
+                user=request.user,
+                content=content
+            )
         return redirect('chatroom_detail', room_id=room.id)
 
-    return render(request, 'chat_app/chatroom_detail.html', {'room': room, 'messages': messages})
+    return render(request, 'chat_app/chatroom_detail.html', {
+        'room': room,
+        'messages': messages
+    })
 
 @login_required
-def create_chatroom(request):
+def create_channel_view(request):
     if request.method == 'POST':
         name = request.POST.get('name')
+        description = request.POST.get('description', '')
+
         if name:
-            Channel.objects.create(name=name)
-        return redirect('chatroom_list')
+            Channel.objects.create(name=name, description=description)
+            return redirect('chatroom_list')
+        else:
+            pass
+
     return render(request, 'chat_app/create_chatroom.html')
+
+@login_required
+def delete_channel(request, room_id):
+    channel = get_object_or_404(Channel, id=room_id)
+    if request.method == 'POST':
+        channel.delete()
+        return redirect('chatroom_list')
+    return redirect('chatroom_detail', room_id=channel.id)
+
+
+
