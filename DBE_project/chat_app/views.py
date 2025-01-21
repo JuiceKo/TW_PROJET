@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from .models import Channel, Message
 from .forms import CustomUserCreationForm
 
@@ -74,5 +74,10 @@ def delete_channel(request, room_id):
         return redirect('chatroom_list')
     return redirect('chatroom_detail', room_id=channel.id)
 
-
+@login_required
+def custom_logout(request):
+    if request.method == "POST":
+        logout(request)
+        return redirect('landing_page')
+    return redirect('landing_page')
 

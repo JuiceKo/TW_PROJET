@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from chat_app import views as chat_views
+from chat_app.views import custom_logout
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,4 +25,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('chat/', include('chat_app.urls')),
     path('register/', chat_views.register_view, name='register'),
+    path('logout/', custom_logout, name='logout'),
 ]
