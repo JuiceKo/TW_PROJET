@@ -3,5 +3,5 @@
 Project Techno-Web2 
 
 Bastien DIDIERJEAN
-Elise BEAVUY
+Elise BEAUVY
 Roch Davy Huffel NZIENGUI MBADINGA
