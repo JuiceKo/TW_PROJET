@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from .models import Channel, Message
 from .forms import CustomUserCreationForm
+from django.contrib import messages
 
 
 
@@ -81,3 +82,16 @@ def custom_logout(request):
         return redirect('landing_page')
     return redirect('landing_page')
 
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            messages.success(request, 'Connexion réussie!')
+            return redirect('chatroom_list')
+        else:
+            messages.error(request, 'Nom d\'utilisateur ou mot de passe incorrect.')
+
+    return render(request, 'chat_app/login.html')

@@ -26,4 +26,5 @@ urlpatterns = [
     path('chat/', include('chat_app.urls')),
     path('register/', chat_views.register_view, name='register'),
     path('logout/', custom_logout, name='logout'),
+    path('login/', chat_views.login_view, name='login'),
 ]
