@@ -12,14 +12,3 @@
         </div>
     {% endfor %}
 </div>
-
-<script>
-    // Ajoute l'emoji sélectionné au champ d'entrée
-    document.querySelectorAll('.emoji-btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const emoji = this.getAttribute('data-emoji');
-            const input = document.querySelector('#message-input');
-            input.value += emoji; // Ajoute l'emoji au champ
-        });
-    });
-</script>
