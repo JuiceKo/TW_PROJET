@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'chat_app.apps.ChatAppConfig',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -123,6 +124,16 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGOUT_REDIRECT_URL = 'landing_page'
+ASGI_APPLICATION = 'DBE_project.asgi.application'
+
+CHANNEL_LAYERS = {
+  'default': {
+    'BACKEND': 'channels.layers.InMemoryChannelLayer',
+  },
+}
+
+
+
 
 
 

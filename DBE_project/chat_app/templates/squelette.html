@@ -32,16 +32,18 @@
       position: absolute;
       right: 20px;
     }
+
+    .deco-container {
+      position: absolute;
+      left: 20px;
+    }
+
     .logo-container img {
       height: 40px;
       width: auto;
       vertical-align: middle;
     }
-    /* Bouton de déconnexion */
-    .logout-container {
-      position: absolute;
-      left: 20px;
-    }
+
     .logout-button {
       background-color: #ffffff;
       color: #1d4f91;
@@ -63,13 +65,17 @@
 <body>
 
   <header>
-    <h1>Chatte App</h1>
+    <a href="{% url 'landing_page' %}">
+      <h1>Chatte App</h1>
+    </a>
 
     {% if user.is_authenticated %}
-      <form action="{% url 'logout' %}" method="POST" style="display:inline;">
-        {% csrf_token %}
-        <button type="submit" class="logout-button">Déconnexion</button>
-      </form>
+    <div class="deco-container">
+        <form action="{% url 'logout' %}" method="POST">
+          {% csrf_token %}
+          <button type="submit" class="logout-button">Déconnexion</button>
+        </form>
+      </div>
     {% endif %}
 
 

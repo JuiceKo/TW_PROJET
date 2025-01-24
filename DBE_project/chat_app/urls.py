@@ -6,4 +6,5 @@ urlpatterns = [
     path('create/', views.create_channel_view, name='create_chatroom'),
     path('<int:room_id>/', views.chatroom_detail, name='chatroom_detail'),
     path('channel/<int:room_id>/delete/', views.delete_channel, name='delete_channel'),
+    path('<int:room_id>/', views.chatroom_detail, name='chatroom_detail'),
 ]

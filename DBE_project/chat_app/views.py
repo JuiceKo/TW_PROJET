@@ -8,6 +8,7 @@ from django.contrib import messages
 
 
 
+
 def landing_page(request):
     if request.user.is_authenticated:
         return redirect('chatroom_list')
@@ -35,23 +36,12 @@ def chatroom_list(request):
 @login_required
 def chatroom_detail(request, room_id):
     room = get_object_or_404(Channel, id=room_id)
-    messages = room.messages.order_by('timestamp')
-
-    if request.method == 'POST':
-        content = request.POST.get('content')
-        if content:
-            # Utilise "channel=room" (et non "chatroom")
-            Message.objects.create(
-                channel=room,
-                user=request.user,
-                content=content
-            )
-        return redirect('chatroom_detail', room_id=room.id)
-
+    messages = Message.objects.filter(channel=room).order_by('timestamp')
     return render(request, 'chat_app/chatroom_detail.html', {
         'room': room,
         'messages': messages
     })
+
 
 @login_required
 def create_channel_view(request):

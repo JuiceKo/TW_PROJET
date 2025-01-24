@@ -11,10 +11,11 @@
     overflow: hidden;
   }
   .chat-section {
-    flex: 3;
+    flex: 1;
     display: flex;
     flex-direction: column;
     padding: 20px;
+    box-sizing: border-box;
   }
   .chat-section h2 {
     color: #1d4f91;
@@ -31,6 +32,7 @@
     margin: 0;
     padding-left: 0;
   }
+
   .chat-messages li {
     display: flex;
     justify-content: space-between;
@@ -39,6 +41,9 @@
     background-color: #fff;
     padding: 8px;
     border-radius: 4px;
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+    max-width: 100%;
   }
   .message-content {
     font-size: 0.95em;
@@ -49,14 +54,18 @@
     margin-left: 15px;
     font-style: italic;
   }
+  .message-form {
+    display: flex;
+    gap: 5px;
+  }
   .message-form textarea {
-    width: 100%;
-    height: 60px;
+    width: 90%;
+    height: 50px;
     padding: 10px;
     resize: none;
   }
   .message-form button {
-    width: 120px;
+    width: 100px;
     padding: 10px;
     background-color: #1d4f91;
     color: #fff;
@@ -68,10 +77,11 @@
     background-color: #153869;
   }
   .channel-info {
-    flex: 0.8;
+    flex: 0 0 300px;
     background-color: #fff;
     border-left: 2px solid #ccc;
     padding: 20px;
+    box-sizing: border-box;
     overflow-y: auto;
   }
   .channel-info h2 {
@@ -96,7 +106,7 @@
   <div class="chat-section">
     <h2>Salon : {{ room.name }}</h2>
     <div class="chat-messages">
-      <ul>
+      <ul id="message-list">
         {% for message in messages %}
           <li>
             <span class="message-content">
@@ -107,20 +117,63 @@
         {% endfor %}
       </ul>
     </div>
-    <form method="POST" class="message-form">
+    <!-- Form pour WebSocket -->
+    <form class="message-form">
       {% csrf_token %}
-      <textarea name="content" placeholder="Tapez votre message..."></textarea>
+      <textarea id="messageInput" placeholder="Tapez votre message..."></textarea>
       <button type="submit">Envoyer</button>
     </form>
   </div>
   <div class="channel-info">
     <h2>{{ room.name }}</h2>
     <p>{{ room.description }}</p>
-
     <form action="{% url 'delete_channel' room.id %}" method="POST">
       {% csrf_token %}
       <button type="submit" class="delete-button">Supprimer le channel</button>
     </form>
   </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const roomId = "{{ room.id }}";
+  const userName = "{{ request.user.username }}";
+  const messageList = document.getElementById('message-list');
+  const messageInput = document.getElementById('messageInput');
+  const form = document.querySelector('.message-form');
+
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const chatSocket = new WebSocket(protocol + '//' + window.location.host + '/ws/chat/' + roomId + '/');
+
+  chatSocket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    const newLi = document.createElement('li');
+    newLi.innerHTML = `
+      <span class="message-content">
+        <strong>${data.username}</strong> : ${data.message}
+      </span>
+      <span class="timestamp">${(new Date()).toLocaleString()}</span>
+    `;
+    messageList.appendChild(newLi);
+    messageList.scrollTop = messageList.scrollHeight;
+  };
+
+  chatSocket.onclose = function(e) {
+    console.error('WebSocket fermé :', e);
+  };
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const text = messageInput.value.trim();
+    if (text) {
+      chatSocket.send(JSON.stringify({
+        'message': text,
+        'username': userName
+      }));
+      messageInput.value = '';
+      messageInput.focus();
+    }
+  });
+});
+</script>
 {% endblock %}
