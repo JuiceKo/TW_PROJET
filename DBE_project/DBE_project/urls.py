@@ -21,10 +21,9 @@ from chat_app.views import custom_logout
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', chat_views.landing_page, name='landing_page'),
+    path('', chat_views.login_view, name='login'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('chat/', include('chat_app.urls')),
     path('register/', chat_views.register_view, name='register'),
     path('logout/', custom_logout, name='logout'),
-    path('login/', chat_views.login_view, name='login'),
 ]
