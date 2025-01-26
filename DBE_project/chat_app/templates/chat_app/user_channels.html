@@ -55,7 +55,7 @@
         {% for channel in channels %}
             <li>{{ channel.name }}</li>
         {% empty %}
-            <li>No channels found.</li>
+            <li>Vous n'avez pas de salons.</li>
         {% endfor %}
   </ul>
   <a href="{% url 'create_chatroom' %}" class="create-room-link">Créer un nouveau salon</a>

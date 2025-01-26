@@ -6,6 +6,7 @@ from .models import Channel, Message
 from .forms import CustomUserCreationForm
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.db import transaction
 
 
 
@@ -61,12 +62,13 @@ def create_channel_view(request):
         description = request.POST.get('description', '')
 
         if name:
-            Channel.objects.create(name=name, description=description)
-            Channel.members = request.user
+            with transaction.atomic():
+                channel = Channel.objects.create(name=name, description=description)
+                # Ajouter l'utilisateur créateur comme membre du salon
+                channel.members.add(request.user)
             return redirect('chatroom_list')
         else:
             pass
-
     return render(request, 'chat_app/create_chatroom.html')
 
 @login_required
@@ -101,10 +103,4 @@ def login_view(request):
 @login_required
 def user_channels(request):
     channels = Channel.objects.filter(members=request.user)
-    return render(request, 'chat_app/user_channels.html', {'channels': channels})
-
-    # Debugging: Print channels to console
-    print("User:", user)
-    print("Channels:", channels)
-
     return render(request, 'chat_app/user_channels.html', {'channels': channels})
