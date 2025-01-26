@@ -12,7 +12,7 @@ from django.db import transaction
 
 def landing_page(request):
     if request.user.is_authenticated:
-        return redirect('chatroom_list')
+        return redirect('user_channels')
     return render(request, 'chat_app/landing_page.html')
 
 
@@ -104,3 +104,10 @@ def login_view(request):
 def user_channels(request):
     channels = Channel.objects.filter(members=request.user)
     return render(request, 'chat_app/user_channels.html', {'channels': channels})
+
+@login_required
+def join_channel(request, room_id):
+    channel = get_object_or_404(Channel, id=room_id)
+    with transaction.atomic():
+        channel.members.add(request.user)
+    return redirect('chatroom_detail', room_id=channel.id)

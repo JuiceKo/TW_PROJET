@@ -116,6 +116,10 @@
   <div class="channel-info">
     <h2>{{ room.name }}</h2>
     <p>{{ room.description }}</p>
+    <form action="{% url 'join_channel' room.id %}" method="POST" class="message-form">
+      {% csrf_token %}
+      <button type="submit">Rejoindre le channel</button>
+    </form>
 
     <form action="{% url 'delete_channel' room.id %}" method="POST">
       {% csrf_token %}
