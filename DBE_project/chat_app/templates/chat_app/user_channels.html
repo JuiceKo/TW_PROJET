@@ -53,9 +53,13 @@
   <h1>Mes salons</h1>
   <ul>
         {% for channel in channels %}
-            <li>{{ channel.name }}</li>
+        <li>
+            <a href="{% url 'chatroom_detail' channel.id %}" class="room-link">
+            {{ channel.name }}
+            </a>
+        </li>
         {% empty %}
-            <li>Vous n'avez pas de salons.</li>
+            <li>Vous n'avez pas de channels.</li>
         {% endfor %}
   </ul>
   <a href="{% url 'create_chatroom' %}" class="create-room-link">Créer un nouveau salon</a>
