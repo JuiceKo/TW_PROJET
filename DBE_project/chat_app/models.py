@@ -6,9 +6,11 @@ class Channel(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    members = models.ManyToManyField(User, related_name='channels')
 
     def __str__(self):
         return self.name
+
 
 class Message(models.Model):
     channel = models.ForeignKey(

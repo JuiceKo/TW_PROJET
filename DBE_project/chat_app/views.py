@@ -5,6 +5,7 @@ from django.contrib.auth import login, authenticate, logout
 from .models import Channel, Message
 from .forms import CustomUserCreationForm
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 
 
@@ -61,6 +62,7 @@ def create_channel_view(request):
 
         if name:
             Channel.objects.create(name=name, description=description)
+            Channel.members = request.user
             return redirect('chatroom_list')
         else:
             pass
@@ -95,3 +97,14 @@ def login_view(request):
             messages.error(request, 'Nom d\'utilisateur ou mot de passe incorrect.')
 
     return render(request, 'chat_app/login.html')
+
+@login_required
+def user_channels(request):
+    channels = Channel.objects.filter(members=request.user)
+    return render(request, 'chat_app/user_channels.html', {'channels': channels})
+
+    # Debugging: Print channels to console
+    print("User:", user)
+    print("Channels:", channels)
+
+    return render(request, 'chat_app/user_channels.html', {'channels': channels})
