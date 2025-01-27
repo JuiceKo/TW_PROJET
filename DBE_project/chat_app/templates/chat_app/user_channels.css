@@ -1,0 +1,124 @@
+.page-container {
+    display: flex;
+    min-height: 80vh;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+
+  .sidebar {
+    width: 300px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-right: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .sidebar h1 {
+    color: #1d4f91;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+
+  .sidebar ul li {
+    background-color: #f2f2f2;
+    margin-bottom: 5px;
+    padding: 8px;
+    border-radius: 4px;
+    text-align: center;
+  }
+  .room-link {
+    text-decoration: none;
+    font-size: 1.1em;
+    color: #1d4f91;
+    font-weight: bold;
+    transition: color 0.2s ease;
+  }
+  .room-link:hover {
+    color: #153869;
+  }
+
+  .button-row {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  .create-room-link {
+    display: inline-block;
+    width: 180px;
+    text-align: center;
+    background-color: #1d4f91;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+  }
+  .create-room-link:hover {
+    background-color: #153869;
+  }
+
+
+  .rules-area {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .rules-area h2 {
+    color: #1d4f91;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+  .rules-area ul {
+    list-style-type: disc;
+    margin-left: 20px;
+  }
+  .rules-area li {
+    margin-bottom: 10px;
+  }
+  .emoji {
+    margin-right: 8px;
+  }
+
+  .rules-image {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+    margin-top: 20px;
+    border-radius: 8px;
+  }
+
+
+  main {
+    padding-top: 80px;
+    padding-bottom: 80px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  header,
+  footer {
+    height: 60px;
+  }
+  header {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+  footer {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
