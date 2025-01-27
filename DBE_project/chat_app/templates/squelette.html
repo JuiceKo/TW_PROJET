@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Dandi Chat</title>
   {% load static %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
       margin: 0;
@@ -21,35 +22,72 @@
       background-color: #1d4f91;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       color: #ffffff;
       z-index: 999;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
       border-bottom-left-radius: 15px;
       border-bottom-right-radius: 15px;
+      padding: 0 20px;
+      box-sizing: border-box;
     }
+
     header h1 {
       margin: 0;
       font-size: 24px;
       color: white;
+      text-decoration: none;
     }
 
-
-    .logo-container {
-      position: absolute;
-      right: 20px;
-    }
-    .logo-container img {
-      height: 40px;
-      width: auto;
-      vertical-align: middle;
-      border-radius: 50%;
+    .left-section {
+      display: flex;
+      align-items: center;
+      flex: 0 0 auto;
     }
 
-    .deco-container {
-      position: absolute;
-      left: 20px;
+    .back-button {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      margin-right: 20px;
+      transition: background-color 0.3s, transform 0.3s;
+      border-radius: 4px;
     }
+
+    .back-button:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .back-button:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+    }
+
+    .back-button i {
+      margin-right: 8px;
+      font-size: 18px;
+    }
+
+    .center-section {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .right-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 0 0 auto;
+    }
+
     .logout-button {
       background-color: #ffffff;
       color: #1d4f91;
@@ -59,22 +97,30 @@
       font-weight: bold;
       cursor: pointer;
       text-decoration: none;
-    }
-    .logout-button:hover {
-      background-color: #eee;
+      transition: background-color 0.3s, transform 0.3s;
     }
 
+    .logout-button:hover {
+      background-color: #eee;
+      transform: translateY(-2px);
+    }
+
+    .logo-container img {
+      height: 40px;
+      width: auto;
+      vertical-align: middle;
+      border-radius: 50%;
+    }
 
     main {
       padding-top: 70px;
-      padding-bottom: 70px; /
+      padding-bottom: 70px;
       width: 100%;
       box-sizing: border-box;
       padding-left: 20px;
       padding-right: 20px;
     }
 
-    /* ----- FOOTER ----- */
     footer {
       position: fixed;
       bottom: 0;
@@ -91,37 +137,70 @@
       border-top-left-radius: 15px;
       border-top-right-radius: 15px;
     }
+
     footer p {
       margin: 0;
       font-size: 14px;
     }
+
     footer a {
       color: #ffffff;
       text-decoration: underline;
       margin-left: 10px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+      }
+
+      .left-section, .right-section, .center-section {
+        flex: none;
+        width: 100%;
+        justify-content: center;
+        margin: 5px 0;
+      }
+
+      .logout-button {
+        width: 100%;
+        text-align: center;
+      }
+
+      .logo-container img {
+        height: 30px;
+      }
     }
   </style>
 </head>
 
 <body>
   <header>
-    <a href="{% url 'landing_page' %}">
-      <h1>Dandi Chat</h1>
-    </a>
+    <div class="left-section">
+      <button onclick="history.back()" class="back-button" title="Retour">
+        ⬅️ Retour
+      </button>
+    </div>
 
-    {% if user.is_authenticated %}
-      <div class="deco-container">
+    <div class="center-section">
+      <a href="{% url 'landing_page' %}">
+        <h1>Dandi Chat</h1>
+      </a>
+    </div>
+
+    <div class="right-section">
+      {% if user.is_authenticated %}
         <form action="{% url 'logout' %}" method="POST">
           {% csrf_token %}
           <button type="submit" class="logout-button">Déconnexion</button>
         </form>
+      {% endif %}
+      <div class="logo-container">
+        <a href="{% url 'landing_page' %}">
+          <img src="{% static 'images/pngegg.png' %}" alt="Logo Dandi Chat">
+        </a>
       </div>
-    {% endif %}
-
-    <div class="logo-container">
-      <a href="{% url 'landing_page' %}">
-        <img src="{% static 'images/pngegg.png' %}" alt="Logo Gay App">
-      </a>
     </div>
   </header>
 
