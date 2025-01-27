@@ -1,5 +1,3 @@
-// static/js/emojis.js
-
 const emojiCategories = {
   "Smileys & Émotions": [
     "😀", "😂", "😍", "👍", "🙏", "🔥", "🎉", "💯", "😎", "🤔",
