@@ -30,6 +30,11 @@ ALLOWED_HOSTS = [
     'www.tw-projet.onrender.com',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://tw-projet.onrender.com',
+    'https://www.tw-projet.onrender.com', 
+]
+
 
 # Application definition
 
