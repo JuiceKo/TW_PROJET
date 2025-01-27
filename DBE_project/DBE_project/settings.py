@@ -157,6 +157,8 @@ SECURE_SSL_REDIRECT = True  # Redirige toutes les requêtes HTTP vers HTTPS
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 
 
 
