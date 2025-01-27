@@ -16,6 +16,12 @@
     text-align: center;
     color: #1d4f91;
   }
+  .error-message {
+    color: #d9534f; /* Rouge */
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+  }
   label {
     display: block;
     margin: 15px 0 5px;
@@ -46,6 +52,17 @@
 
 <div class="form-container">
   <h2>Créer un Channel</h2>
+
+  {% if messages %}
+    {% for msg in messages %}
+      {% if msg.level_tag == 'error' %}
+        <div class="error-message">
+          {{ msg }}
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+
   <form method="POST">
     {% csrf_token %}
 

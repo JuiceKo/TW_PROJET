@@ -2,14 +2,16 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Gay App</title>
+  <title>Dandi Chat</title>
   {% load static %}
   <style>
     body {
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
+      background-color: #faf9f6;
     }
+
     header {
       position: fixed;
       top: 0;
@@ -22,34 +24,38 @@
       justify-content: center;
       color: #ffffff;
       z-index: 999;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
     }
     header h1 {
       margin: 0;
       font-size: 24px;
       color: white;
     }
+
+
     .logo-container {
       position: absolute;
       right: 20px;
+    }
+    .logo-container img {
+      height: 40px;
+      width: auto;
+      vertical-align: middle;
+      border-radius: 50%;
     }
 
     .deco-container {
       position: absolute;
       left: 20px;
     }
-
-    .logo-container img {
-      height: 40px;
-      width: auto;
-      vertical-align: middle;
-    }
-
     .logout-button {
       background-color: #ffffff;
       color: #1d4f91;
       border: none;
-      padding: 8px 12px;
-      border-radius: 4px;
+      padding: 8px 16px;
+      border-radius: 20px;
       font-weight: bold;
       cursor: pointer;
       text-decoration: none;
@@ -57,20 +63,54 @@
     .logout-button:hover {
       background-color: #eee;
     }
+
+
     main {
-      padding-top: 60px;
+      padding-top: 70px;
+      padding-bottom: 70px; /
+      width: 100%;
+      box-sizing: border-box;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    /* ----- FOOTER ----- */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background-color: #1d4f91;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+    footer p {
+      margin: 0;
+      font-size: 14px;
+    }
+    footer a {
+      color: #ffffff;
+      text-decoration: underline;
+      margin-left: 10px;
     }
   </style>
 </head>
-<body>
 
+<body>
   <header>
-    <a href="{% url 'chatroom_list' %}">
-      <h1>Chatte App</h1>
+    <a href="{% url 'landing_page' %}">
+      <h1>Dandi Chat</h1>
     </a>
 
     {% if user.is_authenticated %}
-    <div class="deco-container">
+      <div class="deco-container">
         <form action="{% url 'logout' %}" method="POST">
           {% csrf_token %}
           <button type="submit" class="logout-button">Déconnexion</button>
@@ -78,10 +118,9 @@
       </div>
     {% endif %}
 
-
     <div class="logo-container">
-      <a href="{% url 'chatroom_list' %}">
-        <img src="{% static 'images/logo.png' %}" alt="Logo Gay App">
+      <a href="{% url 'landing_page' %}">
+        <img src="{% static 'images/pngegg.png' %}" alt="Logo Gay App">
       </a>
     </div>
   </header>
@@ -91,5 +130,10 @@
     {% endblock content %}
   </main>
 
+  <footer>
+    <p>
+      © 2025 Dandi Chat. Tous droits réservés.
+    </p>
+  </footer>
 </body>
 </html>
